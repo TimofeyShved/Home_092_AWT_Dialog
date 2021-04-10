@@ -21,7 +21,7 @@ public class Main {
 
     public static void main(String[] args) {
         Main myMainClass = new Main(); // создание наешого основного класса
-        myMainClass.showDialogDemo(); // и вызываемый метод showScrollbarDemo
+        myMainClass.showDialogDemo(); // и вызываемый метод showDialogDemo
     }
 
     // ----------------------------------------------------- описывает основное визуальное отображение
@@ -65,6 +65,19 @@ public class Main {
             }
         });
 
+        // ------------------------  новый класс fileDialog
+        final FileDialog fileDialog = new FileDialog(mainFrame,"Выбрать файл");
+        Button showFileDialogButton = new Button("Oткрыть файл");
+        showFileDialogButton.addActionListener(new ActionListener() {// дейтвие при активации
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                fileDialog.setVisible(true); // отобразить FileDialog
+                statusLabel.setText("Выбран файл:" // путь
+                        + fileDialog.getDirectory() + fileDialog.getFile());
+            }
+        });
+        controlPanel.add(showFileDialogButton); // добавление объектов на форму
+
         // добавление объектов на форму
         controlPanel.add(showAboutDialogButton);
         mainFrame.setVisible(true); // видимость формы true
@@ -89,7 +102,7 @@ public class Main {
         }
 
         public boolean action(Event evt, Object arg){
-            if(arg.equals("Close")){ // если имя объекта - Close
+            if(arg.equals("Закрыть")){ // если имя объекта - Close
                 dispose(); // закрыть окно
                 return true;
             }
@@ -100,6 +113,25 @@ public class Main {
             g.setColor(Color.white); // цвет текста
             g.drawString("Наш текст для нового окна", 25,70 );
             g.drawString("Версия 1.0", 60, 90);
+        }
+
+        //----------------------------------------------------- Что будет в showDialogDemo
+        private void showFileDialogDemo(){
+            headerLabel.setText("Control in action: FileDialog");
+
+            final FileDialog fileDialog = new FileDialog(mainFrame,"Select file");
+            Button showFileDialogButton = new Button("Open File");
+            showFileDialogButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    fileDialog.setVisible(true);
+                    statusLabel.setText("File Selected :"
+                            + fileDialog.getDirectory() + fileDialog.getFile());
+                }
+            });
+
+            // добавление объектов на форму
+            controlPanel.add(showFileDialogButton);
         }
     }
 }
